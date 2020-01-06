@@ -14,3 +14,6 @@ define('URLROOT', 'http://localhost/practice/php/shareposts');
 
 // Site Name
 define('SITENAME', 'SharePosts');
+
+// App version
+define('APPVERSION', '1.0.0');
