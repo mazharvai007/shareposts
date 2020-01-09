@@ -30,11 +30,6 @@ class Users extends Controller
                 'confirm_password_err' => ''
             ];
 
-            // Validate Name
-            if (empty($data['name'])) {
-                $data['name_err'] = 'Please enter name';
-            }
-
             // Validate Email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter email';
@@ -43,6 +38,11 @@ class Users extends Controller
                 if ($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
+            }
+
+            // Validate Name
+            if (empty($data['name'])) {
+                $data['name_err'] = 'Please enter name';
             }
 
             // Validate Password
@@ -61,9 +61,18 @@ class Users extends Controller
             }
 
             // Make sure errors are empty
-            if (empty($data['name_err']) && empty($data['email_err']) && empty($data['password']) && empty($data['confirm_password_err'])) {
-                // Validate
-                die("Success");
+            if ( empty($data['name_err']) && empty($data['email_err']) && empty($data['password']) && empty($data['confirm_password_err']) ) {
+
+
+                // Hash password
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                // Register user
+                if ($this->userModel->register($data)) {
+                    redirect('users/login');
+                } else {
+                    die('Something went wrong');
+                }
             } else {
                 // Load views with errors
                 $this->view('users/register', $data);
