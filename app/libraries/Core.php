@@ -3,7 +3,7 @@
 /*
  =============================================
  * App Core Class
- * 1. Create URL and load controller
+ * 1. Create URL and loads core controller
  * 2. URL FORMAT - /controller/method/params
  =============================================
  */
@@ -62,5 +62,4 @@ class Core
         }
     }
 }
-
-$core = new Core();
+$core = new Core(); 

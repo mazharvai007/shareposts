@@ -1,7 +1,5 @@
 <?php
 
-require_once '../app/libraries/Controller.php';
-
 class Pages extends Controller
 {
     public function __construct()
