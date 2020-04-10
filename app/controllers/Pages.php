@@ -1,7 +1,5 @@
 <?php
 
-require_once '../app/libraries/Controller.php';
-
 class Pages extends Controller
 {
     public function __construct()
@@ -13,7 +11,8 @@ class Pages extends Controller
     {
 
         $data = [
-            'title' => 'Welcome to Homepage',
+            'title' => 'SharePosts',
+            'description' => 'Simple social network built on the MVC - PHP Framework'
         ];
 
         $this->view('pages/index', $data);
@@ -23,7 +22,7 @@ class Pages extends Controller
     {
         $data = [
             'title' => 'Welcome to About Page',
-            'des' => 'Description'
+            'description' => 'App to share post with other users'
         ];
         $this->view('pages/about', $data);
     }
