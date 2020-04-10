@@ -7,11 +7,17 @@ class Posts extends Controller
         if(!isLoggedIn()) {
             redirect('index.php?url=users/login');
         }
+
+        $this->postModel = $this->model('Post');
     }
 
     public function index()
     {
-        $data = [];
+        // Get Posts
+        $posts = $this->postModel->getPosts();
+        $data = [
+            'posts' => $posts
+        ];
 
         // Load view
         $this->view('posts/index', $data);
