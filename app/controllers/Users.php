@@ -7,7 +7,12 @@ class Users extends Controller
         $this->userModel = $this->model('User');
     }
 
-    // Register
+    /*
+    **********
+    * Register
+    **********
+    */
+
     public function register()
     {
         // Check for POST
@@ -96,7 +101,12 @@ class Users extends Controller
         }
     }
 
-    // Login
+    /*
+    **********
+    * Login
+    **********
+    */
+
     public function login()
     {
         // Check for POST
@@ -139,7 +149,7 @@ class Users extends Controller
 
                 if($loggedInUser) {
                     // Create Session
-                    die("Success");
+                    $this->createUserSession($loggedInUser);
                 } else {
                     $data['password_err'] = 'Password incorrect';
 
@@ -162,6 +172,46 @@ class Users extends Controller
 
             // Load View
             $this->view('users/login', $data);
+        }
+    }
+
+    public function createUserSession($user)
+    {
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['user_email'] = $user->email;
+        $_SESSION['user_name'] = $user->name;
+
+        redirect('index.php?url=pages/index');
+    }
+
+    /*
+    **********
+    * Logout
+    **********
+    */
+    
+    public function logout()
+    {
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_email']);
+        unset($_SESSION['user_name']);
+
+        session_destroy();
+        redirect('index.php?url=users/login');
+    }
+
+    /*
+    **********
+    * Check user logged in or not
+    **********
+    */   
+    
+    public function isLoggedIn()
+    {
+        if(isset($_SESSION['user_id'])) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
