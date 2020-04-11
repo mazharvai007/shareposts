@@ -9,7 +9,12 @@ class User
         $this->db = new Database;
     }
 
-    // Register user
+    /*
+    **********
+    * Register user
+    **********
+    */    
+
     public function register($data)
     {
         $this->db->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
@@ -27,7 +32,12 @@ class User
         }
     }
 
-    // Login User
+    /*
+    **********
+    * Login user
+    **********
+    */       
+
     public function login($email, $password)
     {
         $this->db->query('SELECT * FROM users WHERE email = :email');
@@ -44,7 +54,12 @@ class User
 
     }
 
-    // Find user by email
+    /*
+    *********************
+    * Find user by email
+    ********************
+    */       
+
     public function findUserByEmail($email)
     {
         $this->db->query('SELECT * FROM users WHERE email = :email');
@@ -60,5 +75,22 @@ class User
         } else {
             return false;
         }
+    }
+
+    /*
+    ******************
+    * Get user by ID
+    *****************
+    */   
+    public function getUserById($id)
+    {
+        $this->db->query('SELECT * FROM users WHERE id = :id');
+
+        // Bind value
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+
+        return $row;
     }
 }
