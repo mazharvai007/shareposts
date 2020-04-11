@@ -32,9 +32,9 @@ class Posts extends Controller
     }
 
     /*
-    **********
+    ************
     * Add Posts
-    **********
+    ************
     */ 
 
     public function add()
@@ -87,9 +87,9 @@ class Posts extends Controller
     }
 
     /*
-    **********
+    ************
     * Show Posts
-    **********
+    ************
     */
     
     public function show($id)
@@ -105,9 +105,9 @@ class Posts extends Controller
     }
 
     /*
-    **********
+    *************
     * Edit Posts
-    **********
+    *************
     */ 
 
     public function edit($id)
@@ -149,7 +149,6 @@ class Posts extends Controller
             }
 
         } else {
-
             // Get existing post from model
             $post = $this->postModel->getPostById($id);
 
@@ -167,5 +166,34 @@ class Posts extends Controller
             // Load view
             $this->view('posts/edit', $data);        
         }
-    }    
+    }   
+    
+    /*
+    ***************
+    * Delete Posts
+    ***************
+    */
+
+    public function delete($id)
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Get existing post from model
+            $post = $this->postModel->getPostById($id);
+
+            // Check for owner
+            if($post->user_id != $_SESSION['user_id']) {
+                redirect('index.php?url=posts');
+            }
+
+            if($this->postModel->deletePost($id)) {
+                flash('post_message', 'Post Removed');
+                redirect('index.php?url=posts');
+            } else {
+                die('Something went wrong.');
+            }
+        } else {
+            redirect('index.php?url=posts');
+        }
+    }
 }
